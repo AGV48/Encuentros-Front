@@ -1,59 +1,115 @@
-# Encuentros
+# 📄 Encuentros – Segunda Entrega
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.2.
+Realizado por:
+- Alejandro Gutierrez Vallejo
+- Tomas Ramirez Agudelo
+- Sara Pineda Valencia
 
-## Development server
+---
 
-To start a local development server, run:
+## 🎯 Objetivo de la Aplicación
+La aplicación **Encuentros** es una SPA (Single Page Application) desarrollada en **Angular**, que busca gestionar los encuentros/salidas/reuniones de los usuarios.  
+El objetivo principal de esta entrega es aplicar buenas prácticas de desarrollo vistas en clase, incluyendo separación de componentes, validaciones, uso de servicios y almacenamiento en `localStorage`.
 
-```bash
-ng serve
+---
+
+## ⚙️ Funcionamiento y Flujos Implementados
+Actualmente se encuentran desarrollados los siguientes flujos:
+
+1. **Registro de usuario**
+   - Formulario de registro con validaciones de campos.
+   - Almacenamiento del usuario en `localStorage`.
+   - Control de usuarios duplicados.
+
+2. **Inicio de sesión**
+   - Validación de credenciales ingresadas.
+   - Redirección al área principal si el login es correcto.
+   - Persistencia de sesión en `localStorage`.
+
+3. **Funcionalidades adicionales**
+   - Funcionalidad para cerrar sesion y salir de la aplicación.
+   - Actualizacion de datos: Nombre usuario, contraseña.
+   - Funcionalidad para eliminar cuenta.
+
+### Para la entrega final quedan pendientes:
+- Mejoras en validaciones (contraseñas seguras, etc.).
+- Implementar funcionalidades principales:
+  - Creación de encuentro.
+  - Agregar amigos.
+  - Añadir amigos a un encuentro.
+  - Administrar encuentro.
+
+---
+
+## 🗂 Modelo de Datos
+La aplicación almacena los usuarios y sesiones en el `localStorage` con las siguientes estructuras:
+
+### Usuario
+```json
+{
+"id": 1,
+"nombre": "Usuario Demo",
+"email": "demo@correo.com",
+"password": "123456"
+} 
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+También guardamos la sesion actual:
+```json
+{
+"usuarioId": 1,
+"activo": true
+} 
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
+
+## ▶️ Instrucciones de Instalación y Ejecución
+
+1. Clonar el repositorio
 
 ```bash
-ng generate --help
+git clone https://github.com/AGV48/Encuentros-Front.git
+
+cd Encuentros-Front 
 ```
 
-## Building
+2. Instalar dependencias
 
-To build the project run:
+Asegúrate de tener Node.js y Angular CLI instalados.
 
+- Para verificar Node.js:
 ```bash
-ng build
+node -v
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
+- Para instalar Angular CLI (si no lo tienes):
 ```bash
-ng test
+npm install -g @angular/cli
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
+Luego instala las dependencias del proyecto:
 ```bash
-ng e2e
+npm install
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+3. Levantar el servidor de desarrollo
+```bash
+ng serve -o
+```
 
-## Additional Resources
+4. Acceder a la aplicación
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Abre el navegador en: `http://localhost:4200/`
+
+---
+
+## 5. Uso básico
+
+**Registro:** crea un nuevo usuario con nombre, correo y contraseña.
+
+**Login:** ingresa con el usuario registrado.
+
+**Gestión de cuenta:** podrás cerrar sesión, actualizar tus datos o eliminar la cuenta.
