@@ -52,6 +52,7 @@ export class Account {
       showConfirmButton: false,
       timer: 1500
     });
+    localStorage.setItem('isLogged', `false`);
     this.router.navigate(['/']);
   }
 
@@ -91,6 +92,7 @@ export class Account {
       timer: 1500
     });
     this.passwordForm.reset();
+    localStorage.setItem('isLogged', `false`);
     this.router.navigate(['/']);
   }
 
@@ -103,6 +105,7 @@ export class Account {
       showConfirmButton: true,
       timer: 1500
     });
+    localStorage.setItem('isLogged', `false`);
     this.router.navigate(['/']);
   }
 }
