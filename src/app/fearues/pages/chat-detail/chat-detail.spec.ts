@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideRouter } from '@angular/router';
 import { ChatDetail } from './chat-detail';
 
 describe('ChatDetail', () => {
@@ -8,7 +9,10 @@ describe('ChatDetail', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ChatDetail]
+      imports: [ChatDetail, HttpClientTestingModule],
+      providers: [
+        provideRouter([])
+      ]
     })
     .compileComponents();
 
@@ -21,3 +25,4 @@ describe('ChatDetail', () => {
     expect(component).toBeTruthy();
   });
 });
+

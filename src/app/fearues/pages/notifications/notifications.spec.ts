@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Notifications } from './notifications';
+import { FriendshipService } from '../../../services/friendship.service';
+import { provideRouter } from '@angular/router';
 
 describe('Notifications', () => {
   let component: Notifications;
@@ -8,7 +10,11 @@ describe('Notifications', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Notifications]
+      imports: [Notifications, HttpClientTestingModule],
+      providers: [
+        FriendshipService,
+        provideRouter([])
+      ]
     })
     .compileComponents();
 
@@ -16,6 +22,7 @@ describe('Notifications', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
+
 
   it('should create', () => {
     expect(component).toBeTruthy();
