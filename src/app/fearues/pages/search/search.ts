@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { FriendshipService } from '../../../services/friendship.service';
+import { FriendshipService } from '../../../modules/amistades/friendship.service';
 
 @Component({
   selector: 'app-search',
