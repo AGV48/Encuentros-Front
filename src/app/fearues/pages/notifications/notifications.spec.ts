@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Notifications } from './notifications';
-import { FriendshipService } from '../../../services/friendship.service';
+import { FriendshipService } from '../../../modules/amistades/friendship.service';
 import { provideRouter } from '@angular/router';
 
 describe('Notifications', () => {
