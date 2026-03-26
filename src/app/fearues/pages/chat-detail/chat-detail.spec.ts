@@ -63,6 +63,12 @@ describe('ChatDetail Component', () => {
     spyOn(console, 'error');
     spyOn(console, 'warn');
 
+    // Set default return values for httpSpy to prevent 'subscribe' on undefined
+    httpSpy.get.and.returnValue(of({}));
+    httpSpy.post.and.returnValue(of({}));
+    httpSpy.patch.and.returnValue(of({}));
+    httpSpy.delete.and.returnValue(of({}));
+
     fixture = TestBed.createComponent(ChatDetail);
     component = fixture.componentInstance;
   });
