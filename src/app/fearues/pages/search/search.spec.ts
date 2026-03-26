@@ -15,7 +15,7 @@ describe('Search Component', () => {
     const spy = jasmine.createSpyObj('FriendshipService', ['searchUsers', 'sendFriendRequest']);
 
     await TestBed.configureTestingModule({
-      imports: [Search, HttpClientTestingModule],
+      imports: [Search],
       providers: [
         { provide: FriendshipService, useValue: spy },
         provideRouter([])
@@ -82,7 +82,7 @@ describe('Search Component', () => {
 
   describe('sendRequest', () => {
     beforeEach(() => {
-      spyOn(Swal, 'fire').and.resolveTo({ isConfirmed: true } as any);
+      spyOn(Swal, 'fire').and.returnValue({ isConfirmed: true } as any);
     });
 
     it('should show warning if not logged in', () => {

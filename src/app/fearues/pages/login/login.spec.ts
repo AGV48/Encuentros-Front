@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { Login } from './login';
 
@@ -9,8 +9,8 @@ describe('Login', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Login, HttpClientTestingModule],
-      providers: [provideRouter([])]
+      imports: [Login],
+      providers: [provideHttpClient(), provideRouter([])]
     })
     .compileComponents();
 
@@ -23,4 +23,3 @@ describe('Login', () => {
     expect(component).toBeTruthy();
   });
 });
-

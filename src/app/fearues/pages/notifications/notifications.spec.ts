@@ -15,7 +15,7 @@ describe('Notifications Component', () => {
     const spy = jasmine.createSpyObj('FriendshipService', ['getNotifications', 'acceptRequest', 'rejectRequest']);
 
     await TestBed.configureTestingModule({
-      imports: [Notifications, HttpClientTestingModule],
+      imports: [Notifications],
       providers: [
         { provide: FriendshipService, useValue: spy },
         provideRouter([])
@@ -62,7 +62,7 @@ describe('Notifications Component', () => {
     });
 
     it('should handle error loading notifications', () => {
-      spyOn(Swal, 'fire').and.resolveTo({ isConfirmed: true } as any);
+      spyOn(Swal, 'fire').and.returnValue({ isConfirmed: true } as any);
       friendshipServiceSpy.getNotifications.and.returnValue(throwError(() => new Error('Fail')));
       
       component.loadNotifications();
@@ -74,7 +74,7 @@ describe('Notifications Component', () => {
 
   describe('accept', () => {
     beforeEach(() => {
-      spyOn(Swal, 'fire').and.resolveTo({ isConfirmed: true } as any);
+      spyOn(Swal, 'fire').and.returnValue({ isConfirmed: true } as any);
       component.notifications = [{ id_relacion: 10 }];
     });
 
@@ -100,7 +100,7 @@ describe('Notifications Component', () => {
 
   describe('reject', () => {
     beforeEach(() => {
-      spyOn(Swal, 'fire').and.resolveTo({ isConfirmed: true } as any);
+      spyOn(Swal, 'fire').and.returnValue({ isConfirmed: true } as any);
       component.notifications = [{ id_relacion: 20 }];
     });
 
