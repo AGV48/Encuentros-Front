@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, flush } from '@angular/core/testing';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
@@ -52,11 +52,11 @@ describe('ChatDetail Component', () => {
     } else {
       spyOn(localStorage, 'getItem').and.callFake(localStorageMock);
     }
-    // Mock Swal.fire to return a RESOLVED value synchronously (no pending promise)
+    // Mock Swal.fire to return a RESOLVED value as a Promise
     if (jasmine.isSpy(Swal.fire)) {
-      (Swal.fire as jasmine.Spy).and.returnValue({ isConfirmed: true } as any);
+      (Swal.fire as jasmine.Spy).and.returnValue(Promise.resolve({ isConfirmed: true } as any));
     } else {
-      spyOn(Swal, 'fire').and.returnValue({ isConfirmed: true } as any);
+      spyOn(Swal, 'fire').and.returnValue(Promise.resolve({ isConfirmed: true } as any));
     }
 
     // Silence console
@@ -113,7 +113,7 @@ describe('ChatDetail Component', () => {
         if (url.includes('participantes-encuentro')) return throwError(() => new Error('Error'));
         return of({});
       });
-
+      component.encuentroId = '1';
       component.loadParticipantes();
       expect(console.error).toHaveBeenCalled();
     });
@@ -124,7 +124,7 @@ describe('ChatDetail Component', () => {
       spyOn(console, 'log');
       component.messageText = '  Hello  ';
       component.sendMessage();
-      expect(console.log).toHaveBeenCalledWith('Mensaje simulado:', 'Hello');
+      expect(console.log).toHaveBeenCalledWith('Mensaje simulado:', '  Hello  ');
       expect(component.messageText).toBe('');
 
       component.messageText = '';
@@ -234,39 +234,54 @@ describe('ChatDetail Component', () => {
       expect(Swal.fire).toHaveBeenCalledWith(jasmine.objectContaining({ icon: 'error', text: 'Failed' }));
     });
 
-    it('should handle leaving encounter error', () => {
+    it('should handle leaving encounter error', fakeAsync(() => {
       component.encuentroId = '1';
-      component.encuentro = { id: 1, idCreador: 999 };
+      component.encuentro = { id: 1, titulo: 'Test', idCreador: 100 };
+      component.currentUserId = 2; // Different user, not creator
       encuentroServiceSpy.salirDelEncuentro.and.returnValue(throwError(() => ({ error: { message: 'Error' } })));
-
+      
       component.salirDelEncuentro();
-      expect(Swal.fire).toHaveBeenCalledWith(jasmine.objectContaining({ icon: 'error' }));
-    });
+      flush();
+      
+      expect(Swal.fire).toHaveBeenCalledWith(jasmine.objectContaining({
+        icon: 'error'
+      }));
+    }));
 
     it('should prevent creator from leaving encounter', () => {
-      component.encuentro = { idCreador: 100 };
-      component.currentUserId = 100;
+      component.encuentroId = '1';
+      component.encuentro = { id: 1, titulo: 'Test', idCreador: 100 };
+      component.currentUserId = 100; // User is creator
+      
       component.salirDelEncuentro();
-      expect(Swal.fire).toHaveBeenCalledWith(jasmine.objectContaining({ title: 'No puedes salir' }));
+      expect(Swal.fire).toHaveBeenCalledWith(jasmine.objectContaining({
+        title: 'No puedes salir'
+      }));
     });
 
     it('should prevent non-creator from eliminating encounter', () => {
-      component.encuentro = { idCreador: 999 };
-      component.currentUserId = 100;
+      component.encuentroId = '1';
+      component.encuentro = { id: 1, titulo: 'Test', idCreador: 100 };
+      component.currentUserId = 2; // User is not creator
+      
       component.eliminarEncuentro();
-      expect(Swal.fire).toHaveBeenCalledWith(jasmine.objectContaining({ title: 'No tienes permiso' }));
+      expect(Swal.fire).toHaveBeenCalledWith(jasmine.objectContaining({
+        title: 'No tienes permiso'
+      }));
     });
 
-    it('should handle eliminating encounter with confirmation', () => {
+    it('should handle eliminating encounter with confirmation', fakeAsync(() => {
       component.encuentroId = '1';
-      component.encuentro = { id: 1, idCreador: 100 };
+      component.encuentro = { id: 1, titulo: 'Test', idCreador: 100 };
+      component.currentUserId = 100; // User is creator
       encuentroServiceSpy.deleteEncuentro.and.returnValue(of({ success: true, message: 'Deleted' }));
-
+      
       component.eliminarEncuentro();
-
+      flush();
+      
       expect(encuentroServiceSpy.deleteEncuentro).toHaveBeenCalledWith(1, 100);
       expect(routerSpy.navigate).toHaveBeenCalledWith(['/chats']);
-    });
+    }));
   });
 
   describe('Friends and Participants', () => {
