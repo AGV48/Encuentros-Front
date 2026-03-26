@@ -30,6 +30,9 @@ module.exports = function (config) {
       ]
     },
     reporters: ['progress', 'kjhtml', 'coverage'],
+    browserNoActivityTimeout: 100000,
+    browserDisconnectTolerance: 2,
+    browserDisconnectTimeout: 10000,
     browsers: ['Chrome'],
     restartOnFileChange: true
   });
