@@ -5,7 +5,7 @@ import { FriendshipService } from './friendship.service';
 describe('FriendshipService', () => {
   let service: FriendshipService;
   let httpMock: HttpTestingController;
-  const apiUrl = 'http://localhost:3000/users';
+  const apiUrl = 'https://encuentros-back.vercel.app/users';
 
   beforeEach(() => {
     TestBed.configureTestingModule({

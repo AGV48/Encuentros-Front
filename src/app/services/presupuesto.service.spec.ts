@@ -6,7 +6,7 @@ import { PresupuestoService, Presupuesto, ItemPresupuesto, CreateItemPresupuesto
 describe('PresupuestoService', () => {
   let service: PresupuestoService;
   let httpMock: HttpTestingController;
-  const API_URL = 'http://localhost:3000/presupuesto';
+  const API_URL = 'https://encuentros-back.vercel.app/presupuesto';
 
   const mockPresupuesto: Presupuesto = {
     id: 1,

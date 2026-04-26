@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class FriendshipService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:3000/users';
+  private apiUrl = 'https://encuentros-back.vercel.app/users';
 
   searchUsers(query: string, currentUserId: number | null): Observable<any> {
     const q = encodeURIComponent(query);
